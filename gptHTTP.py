@@ -13,32 +13,33 @@ app = Flask(__name__)
 def hello_world():
     parameter_dict = request.args.to_dict()
 
-    if len(parameter_dict) == 0:
+    if len(parameter_dict) <= 1:
         return 'parameter_error'
 
     try:
         
 
-        openai.api_key = "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"
-        
+        openai.api_key = "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"
+        print("1")
         ##response = openai.Completion.create(engine="davinci", prompt="This is a test", max_tokens=5)
-        
+        print("2")
         from api import GPT, Example, set_openai_key
-        
+        print("3")
         gpt = GPT(engine="davinci-instruct-beta",
-                temperature=0.25,
-                max_tokens=100)
-
+                temperature=0.5,
+                max_tokens=int(request.args['b']))
+        print("4")
         print(request.args['a'])
-
-        output = gpt.submit_request(request.args['a'])
         print("5")
-        print(output.choices[0]['text'])
+        output = gpt.submit_request(request.args['a'])
         print("6")
+        print(output.choices[0]['text'])
+        print("7")
         return output.choices[0]['text']
 
 
     except:
         return 'try_error'
 if __name__ == '__main__':
-    app.run(host='10.138.40.210', port=8000, debug=True)
+    ##app.run(host='0.0.0.0:4999:5000', debug=True)
+    app.run(host='10.138.41.170', port=5000, debug=True)
